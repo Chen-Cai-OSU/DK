@@ -5,6 +5,7 @@ import numpy as np
 import networkx as nx
 from joblib import Parallel, delayed
 import time
+import csv
 from sklearn.preprocessing import normalize
 def diag2array(diag):
     return np.array(diag)
@@ -96,3 +97,12 @@ def normalize_dgms(dgms):
     for dgm in dgms:
         res.append(normalize_dgm(dgm))
     return res
+
+def export(dgm, dir='./', filename='dgm.csv'):
+    # dgm = diagram
+    diag = dgm2diag(dgm)
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    with open(dir + filename, "w") as f:
+        writer = csv.writer(f)
+        writer.writerows(diag)
